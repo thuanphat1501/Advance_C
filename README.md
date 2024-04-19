@@ -1,14 +1,14 @@
-# C nâng cao 🔥
+# Advance C 
 <details><summary>LESSON 1: COMPILER AND MARCO</summary>
 <p>
  
 ## LESSON 1: COMPILER AND MARCO
 ### Quá trình biên dịch
-Quy trình biên dịch là quá trình chuyển đổi ngôn ngữ bậc cao (NNBC) (C/C++, Pascal, Java,...) sang ngôn ngữ máy, để máy tính có thể hiểu và thực thi.
+Quy trình biên dịch là quá trình chuyển đổi ngôn ngữ bậc cao  (C/C++, Pascal, Java,...) sang ngôn ngữ máy, để máy tính có thể hiểu và thực thi.
 ### Quá trình biên dịch gồm 4 giai đoạn
  >  - Giai đoàn tiền xử lý (Pre-processor)
- >  - Giai đoạn dịch NNBC sang Asembly (Compiler)
- >  - Giai đoạn dịch asembly sang ngôn ngữ máy (Asember)
+ >  - Giai đoạn dịch ngôn ngữ bậc cao sang Asembly (Compiler)
+ >  - Giai đoạn dịch Assembly sang ngôn ngữ máy (Assemblier)
  >  - Giai đoạn liên kết (Linker)
 ![Compiler_Marco (2)](https://github.com/DangTruongBT/advance-C/assets/103482832/62ae7186-a6a5-463e-8698-bd0b6aafef55)
 
@@ -16,7 +16,7 @@ Quy trình biên dịch là quá trình chuyển đổi ngôn ngữ bậc cao (N
  - 1 Project được tạo ra từ nhiều file: `a.h, b.h, a.c, b.c` và file `main.c` sau quá trình tiền xử lý sẽ gọp tất cả các file thành 1 file duy nhất là file `main.i`.
  - Trong quá trình này sẽ chèn Header vào, triển khai Macro và xóa commment.
  - Lệnh trong CMD là: `gcc -E main.c -o main.i`.
-   ![Screenshot 2024-03-08 101451](https://github.com/DangTruongBT/advance-C/assets/103482832/3682f5e3-5279-4215-aeda-d7f6543e23e6)
+
 #### **3 việc xảy ra trong quá trình tiền xử lý**
  - `include` file header, có nghĩa là nội dung file sẽ được chèn vào vị trí mà mình chỉ định.
  - Xóa bỏ ghi chú (không ảnh hưởng đến dung lượng bộ nhớ và tốc độ xử lý chương trình)
@@ -28,7 +28,7 @@ Quy trình biên dịch là quá trình chuyển đổi ngôn ngữ bậc cao (N
      - `#define`
          - Macro được định nghĩa bằng cách sử dụng chỉ thị tiền xử lý #define.
          - Nơi nào có tên Macro sẽ được thay thế bằng nội dung của macro đó.
-         - Giảm lặp lại mã ,dễ bảo trì.
+         - Giảm lặp lại mã, dễ bảo trì.
          - Ví dụ 1:
            ```c
            #include <stdio.h>
@@ -160,7 +160,7 @@ Quy trình biên dịch là quá trình chuyển đổi ngôn ngữ bậc cao (N
  		)
 
  		return 0;
-- Compiler (Giai đoạn dịch NNBC sang ngôn ngữ Assembly):
+- Compiler (Giai đoạn dịch ngôn ngữ bậc cao sang ngôn ngữ Assembly):
    - Quá trình này compiler sẽ biên dịch từ file `.i `sang file ngôn ngữ assembly là file `.s`
    - Dùng lệnh `gcc -S main.i -o main.s`
 - Assembler (Giai đoạn dịch ngôn ngữ Assembly sang ngôn ngữ máy): compiler sẽ Biên dịch ngôn ngữ Assembly sang ngôn ngữ máy (0 và 1). Và tạo ra tệp tin Object `.o`
