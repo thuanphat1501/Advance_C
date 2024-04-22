@@ -169,3 +169,111 @@ Quy trình biên dịch là quá trình chuyển đổi ngôn ngữ bậc cao  (
    - 1 hoặc nhiều file.o sẽ được compiler liên kết lại 1 File `.exe`.
    - File này để hệ điều hành chạy
    - Dùng lệnh gcc  `main.o -o filename` để tạo ra tệp thực thi .
+<details><summary>LESSON 1: COMPILER AND MARCO</summary>
+<p>
+ 
+## LESSON 2: STDARG AND ASSERT
+### THƯ VIỆN STDARG
+ - Cung cấp các phương thức để làm việc với các hàm có số lượng input parameter không cố định.
+ - Các hàm như printf và scanf là ví dụ điển hình
+ - va_list: là một kiểu dữ liệu để đại diện cho danh sách các đối số biến đổi.
+ - va_start: Bắt đầu một danh sách đối số biến đổi. Nó cần được gọi trước khi truy cập các đối số biến đổi đầu tiên.
+ - va_arg: Truy cập một đối số trong danh sách. Hàm này nhận một đối số của kiểu được xác định bởi tham số thứ hai
+ - va_end: Kết thúc việc sử dụng danh sách đối số biến đổi. Nó cần được gọi trước khi kết thúc hàm.
+ ```c
+ #include <stdio.h>
+ #include <stdarg.h>
+ 
+ typedef enum {
+     TEMPERATURE_SENSOR,
+     PRESSURE_SENSOR
+ } SensorType;
+ 
+ void processSensorData(SensorType type, ...) {
+     va_list args;
+     va_start(args, type);
+ 
+     switch (type) {
+         case TEMPERATURE_SENSOR: {
+             int numArgs = va_arg(args, int);
+             int sensorId = va_arg(args, int);
+             float temperature = va_arg(args, double); // float được promote thành double
+             printf("Temperature Sensor ID: %d, Reading: %.2f degrees\n", sensorId, temperature);
+             if (numArgs > 2) {
+                 // Xử lý thêm tham số nếu có
+                 char* additionalInfo = va_arg(args, char*);
+                 printf("Additional Info: %s\n", additionalInfo);
+             }
+             break;
+         }
+         case PRESSURE_SENSOR: {
+             int numArgs = va_arg(args, int);
+             int sensorId = va_arg(args, int);
+             int pressure = va_arg(args, int);
+             printf("Pressure Sensor ID: %d, Reading: %d Pa\n", sensorId, pressure);
+             if (numArgs > 2) {
+                 // Xử lý thêm tham số nếu có
+                 char* unit = va_arg(args, char*);
+                 printf("Unit: %s\n", unit);
+             }
+             break;
+         }
+     }
+ 
+     va_end(args);
+ }
+ 
+ int main() {
+     processSensorData(TEMPERATURE_SENSOR, 3, 1, 36.5, "Room Temperature");
+     processSensorData(PRESSURE_SENSOR, 2, 2, 101325);
+     return 0;
+ }
+ ```
+### THƯ VIỆN ASSERT
+ - Cung cấp macro assert. 
+ - Macro này được sử dụng để kiểm tra một điều kiện. 
+ - Nếu điều kiện đúng (true), không có gì xảy ra và chương trình tiếp tục thực thi.
+ - Nếu điều kiện sai (false), chương trình dừng lại và thông báo một thông điệp lỗi.
+ - Dùng trong debug, dùng #define NDEBUG để tắt debug.
+ - Điều kiện đúng
+ ```c
+ #include <stdio.h>
+ #include <assert.h>
+ 
+ int main() {
+     int x = 5;
+ 
+     assert(x == 5);
+ 
+     // Chương trình sẽ tiếp tục thực thi nếu điều kiện là đúng.
+     printf("X is: %d", x);
+     
+     return 0;
+ } // OUTPUT : X is 5
+ ```
+### LỖI THƯỜNG GẶP
+ - Lỗi truy cập mảng không an toàn.
+ - Lỗi chia cho số 0.
+ - Chia số nguyên cho số nguyên, kết quả là số thực.
+### EXAMPLE
+```c
+#include <assert.h>
+#include <stdint.h>
+
+#define ASSERT_SIZE(type, size) assert(sizeof(type) == (size))
+
+void checkTypeSizes() {
+    ASSERT_SIZE(uint32_t, 4);
+    ASSERT_SIZE(uint16_t, 2);
+    // Kiểm tra các kích thước kiểu dữ liệu khác
+}
+```
+```c
+#include <assert.h>
+
+#define ASSERT_IN_RANGE(val, min, max) assert((val) >= (min) && (val) <= (max))
+
+void setLevel(int level) {
+    ASSERT_IN_RANGE(level, 1, 10);
+    // Thiết lập cấp độ
+}
