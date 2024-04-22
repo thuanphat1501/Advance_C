@@ -170,9 +170,11 @@ Quy trình biên dịch là quá trình chuyển đổi ngôn ngữ bậc cao  (
    - File này để hệ điều hành chạy
    - Dùng lệnh gcc  `main.o -o filename` để tạo ra tệp thực thi .
 </p>
+</details>
+
 <details><summary>LESSON 2: STDARG AND ASSERT</summary>
 <p>
-</details>
+
 ## LESSON 2: STDARG AND ASSERT
 ### THƯ VIỆN STDARG
  - Cung cấp các phương thức để làm việc với các hàm có số lượng input parameter không cố định.
