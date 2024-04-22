@@ -169,7 +169,7 @@ Quy trình biên dịch là quá trình chuyển đổi ngôn ngữ bậc cao  (
    - 1 hoặc nhiều file.o sẽ được compiler liên kết lại 1 File `.exe`.
    - File này để hệ điều hành chạy
    - Dùng lệnh gcc  `main.o -o filename` để tạo ra tệp thực thi .
-<details><summary>LESSON 1: COMPILER AND MARCO</summary>
+<details><summary>LESSON 2: STDARG AND ASSERT</summary>
 <p>
  
 ## LESSON 2: STDARG AND ASSERT
