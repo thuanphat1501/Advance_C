@@ -483,3 +483,12 @@ int main() {
 ```
 </p>
 </details>
+
+<details><summary>LESSON 4: MEMORY LAYOUT</summary>
+<p>
+Chương trình main.exe ( trên window), main.hex ( nạp vào vi điều khiển) được lưu ở bộ nhớ SSD hoặc FLASH. Khi nhấn run chương trình trên window ( cấp nguồn cho vi điều khiển) thì những chương trình này sẽ được copy vào bộ nhớ RAM để thực thi.
+![image](https://github.com/thuanphat1501/Advance_C/assets/130131756/80972443-ab8f-4489-a775-2f5a11776843).
+
+ 
+</p>
+</details>
