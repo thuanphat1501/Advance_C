@@ -283,3 +283,14 @@ void setLevel(int level) {
 ```
 </p>
 </details>
+<details><summary>LESSON 1: COMPILER AND MARCO</summary>
+<p>
+ Trong ngôn ngữ lập trình C, con trỏ (pointer) là một biến chứa địa chỉ bộ nhớ của một biến khác. Việc sử dụng con trỏ giúp chúng ta thực hiện các thao tác trên bộ nhớ một cách linh hoạt hơn. Dưới đây là một số khái niệm cơ bản về con trỏ trong C:
+### CÁCH KHAI BÁO
+ ```c
+ int *ptr;  // con trỏ đến kiểu int
+char *ptr_char;  // con trỏ đến kiểu char
+float *ptr_float;  // con trỏ đến kiểu float
+ ```
+</p>
+</details>
