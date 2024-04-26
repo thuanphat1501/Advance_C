@@ -487,8 +487,112 @@ int main() {
 <details><summary>LESSON 4: MEMORY LAYOUT</summary>
 <p>
 Chương trình main.exe ( trên window), main.hex ( nạp vào vi điều khiển) được lưu ở bộ nhớ SSD hoặc FLASH. Khi nhấn run chương trình trên window ( cấp nguồn cho vi điều khiển) thì những chương trình này sẽ được copy vào bộ nhớ RAM để thực thi.
-![image](https://github.com/thuanphat1501/Advance_C/assets/130131756/80972443-ab8f-4489-a775-2f5a11776843).
-
  
+ ![1](https://github.com/thuanphat1501/Advance_C/assets/130131756/18af5e84-3cca-4908-a84a-6465eeba6311)
+### TEXT SEGMENT
+- Mã máy:
+    - Chứa tập hợp các lệnh thực thi.
+    - Quyền truy cập: Text Segment thường có quyền đọc và thực thi, nhưng không có quyền ghi. 
+    - Lưu hằng số, con trỏ kiểu char
+    - Tất cả các biến lưu ở phần vùng Text đều không thể thay đổi giá trị mà chỉ được đọc.
+![2](https://github.com/thuanphat1501/Advance_C/assets/130131756/2784ede6-c4b8-488e-b1b5-4a6ef6363f0d)
+- Ví dụ:
+```c
+#include <stdio.h>
+
+const int a = 10;
+char arr[] = "Hello";
+char *arr1 = "Hello";
+
+int main() {
+   
+
+    printf("a: %d\n", a);
+
+    arr[3] = 'W';
+    printf("arr: %s", arr);
+
+    arr1[3] = 'E';
+    printf("arr1: %s", arr1);
+
+    
+    return 0;
+}
+```
+### DATA SEGMENT
+- Initialized Data Segment (Dữ liệu Đã Khởi Tạo):
+
+   - Chứa các biến toàn cục được khởi tạo với giá trị khác 0.
+
+   - Chứa các biến static được khởi tạo với giá trị khác 0.
+
+   - Quyền truy cập là đọc và ghi, tức là có thể đọc và thay đổi giá trị của biến .
+
+   - Tất cả các biến sẽ được thu hồi sau khi chương trình kết thúc.
+![image](https://github.com/DangTruongBT/advance-C/assets/103482832/c69d18eb-fb00-4a57-8552-9197b5319cbe)
+- Ví dụ:
+```c
+#include <stdio.h>
+
+int a = 10;
+double d = 20.5;
+
+static int var = 5;
+
+void test()
+{
+    static int local = 10;
+}
+
+int main(int argc, char const *argv[])
+{  
+    a = 15;
+    d = 25.7;
+    var = 12;
+    printf("a: %d\n", a);
+    printf("d: %f\n", d);
+    printf("var: %d\n", var);
+
+    return 0;
+}
+```
+### BSS SEGMENT
+- Uninitialized Data Segment (Dữ liệu Chưa Khởi Tạo):
+  - Chứa các biến toàn cục khởi tạo với giá trị bằng 0 hoặc không gán giá trị.
+  - Chứa các biến static với giá trị khởi tạo bằng 0 hoặc không gán giá trị.
+  - Quyền truy cập là đọc và ghi, tức là có thể đọc và thay đổi giá trị của biến .
+  - Tất cả các biến sẽ được thu hồi sau khi chương trình kết thúc.
+![image](https://github.com/DangTruongBT/advance-C/assets/103482832/6780304c-be05-46b1-856b-1f7bdc680a95)
+- Ví dụ:
+```c
+#include <stdio.h>
+typedef struct 
+{
+    int x;
+    int y;
+} Point_Data;
+
+int a = 0;
+int b;
+
+static int global = 0;
+static int global_2;
+
+static Point_Data p1 = {5,7};
+
+void test()
+{
+    static int local = 0;
+    static int local_2;
+}
+
+int main() {
+
+    printf("a: %d\n", a);
+    printf("global: %d\n", global);
+
+    return 0;
+}
+```
 </p>
 </details>
