@@ -288,13 +288,198 @@ void setLevel(int level) {
 <p>
  Trong ngôn ngữ lập trình C, con trỏ (pointer) là một biến chứa địa chỉ bộ nhớ của một biến khác. Việc sử dụng con trỏ giúp chúng ta thực hiện các thao tác trên bộ nhớ một cách linh hoạt hơn.
 - Cách khai báo
-```
+ 
+```c
 int *ptr;  // con trỏ đến kiểu int
 char *ptr_char;  // con trỏ đến kiểu char
 float *ptr_float;  // con trỏ đến kiểu float
-- Lấy địa chỉ của một biến và truy cập giá trị
 ```
+- Lấy địa chỉ của một biến và truy cập giá trị
+```c
 int x = 10;
 int *ptr_x = &x;  // ptr_x giờ đây chứa địa chỉ của x
 int y = *ptr_x;  // y sẽ bằng giá trị của x
 ```
+- Kích thước của con trỏ phụ thuộc vào kiến trúc máy tính và trình biên dịch.
+
+```c
+#include <stdio.h>
+
+int main() {
+    int *ptr;
+    printf("Size of pointer: %d bytes\n", sizeof(ptr));
+    return 0;
+}
+```
+### EXAMPLE
+```c
+#include <stdio.h>
+void swap(int *a, int *b)
+{
+    int tmp = *a;
+    *a = *b;
+    *b = tmp;
+}
+int main()
+{
+   int a = 10, b = 20;
+   swap(&a, &b);
+
+   printf("value a is: %d\n", a);
+   printf("value b is: %d\n", b);
+
+    return 0;
+}
+```
+### VOID POINTER
+Void pointer thường dùng để trỏ để tới bất kỳ địa chỉ nào mà không cần biết tới kiểu dữ liệu của giá trị tại địa chỉ đó.
+- Cú pháp:
+ ```c
+ void *ptr_void;
+ ```
+- Ví dụ:
+```c
+include <stdio.h>
+#include <stdlib.h>
+
+int sum(int a, int b)
+{
+    return a+b;
+}
+
+int main() {
+   
+    char array[] = "Hello";
+    int value = 5;
+    double test = 15.7;
+    char letter = 'A';
+   
+    void *ptr = &value;
+    printf("value is: %d\n", *(int*)(ptr));
+
+    ptr = &test;
+    printf("value is: %f\n", *(double*)(ptr));
+
+    ptr = &letter;
+    printf("value is: %c\n", *(char*)(ptr));
+
+    ptr = sum;
+    printf("sum: %d\n", ((int (*)(int,int))ptr)(5,6));
+
+    void *ptr1[] = {&value, &test, &letter , sum, array};
+
+    printf("value: %d\n", *(int*)ptr1[0]);
+
+    printf("value: %c\n", *((char*)ptr1[4]+1));
+
+    return 0;
+}
+
+```
+### FUNCTION POINTER 
+- Pointer to function (con trỏ hàm) là một biến mà giữ địa chỉ của một hàm. Có nghĩa là, nó trỏ đến vùng nhớ trong bộ nhớ chứa mã máy của hàm được định nghĩa trong chương trình.
+- Trong ngôn ngữ lập trình C, con trỏ hàm cho phép bạn truyền một hàm như là một đối số cho một hàm khác, lưu trữ địa chỉ của hàm trong một cấu trúc dữ liệu, hoặc thậm chí truyền hàm như một giá trị trả về từ một hàm khác.
+- Ví dụ:
+```c
+#include <stdio.h>
+#include <string.h>
+
+void bubbleSort(int arr[], int n) {
+    int i, j, temp;
+    for (i = 0; i < n-1; i++)     
+        for (j = i+1; j < n; j++) 
+            if (arr[i] > arr[j]) {
+                temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+}
+
+int main() {
+    int arr[] = {64, 34, 25, 12, 22, 11, 90};
+    int n = sizeof(arr)/sizeof(arr[0]);
+    bubbleSort(arr, n);
+    printf("Sorted array: \n");
+    for (int i=0; i < n; i++)
+        printf("%d ", arr[i]);
+    return 0;
+}
+```
+### POINTER TO CONSTANT
+Là cách định nghĩa một con trỏ không thể thay đổi giá trị tại địa chỉ mà nó trỏ đến thông qua dereference nhưng giá trị tại địa chỉ đó có thể thay đổi.
+- Cú pháp:
+```c
+int const *ptr_const; 
+const int *ptr_const;
+```
+### CONSTANT POINTER
+Định nghĩa một con trỏ mà giá trị nó trỏ đến (địa chỉ ) không thể thay đổi. Tức là khi con trỏ này được khởi tạo thì nó sẽ không thể trỏ tới địa chỉ khác.
+- Cú pháp:
+```c
+int *const const_ptr = &value;
+```
+### POINTER TO POINTER
+Con trỏ đến con trỏ (Pointer to Pointer) là một kiểu dữ liệu trong ngôn ngữ lập trình cho phép bạn lưu trữ địa chỉ của một con trỏ. Con trỏ đến con trỏ cung cấp một cấp bậc trỏ mới, cho phép bạn thay đổi giá trị của con trỏ gốc. Cấp bậc này có thể hữu ích trong nhiều tình huống, đặc biệt là khi bạn làm việc với các hàm cần thay đổi giá trị của con trỏ.
+- Ví dụ:
+```c
+#include <stdio.h>
+
+int main() {
+    int value = 42;
+    int *ptr1 = &value;  // Con trỏ thường trỏ đến một biến
+
+    int **ptr2 = &ptr1;  // Con trỏ đến con trỏ
+
+    /*
+        **ptr2 = &ptr1
+        ptr2 = &ptr1;
+        *ptr2 = ptr1 = &value;
+        **ptr2 = *ptr1 = value
+    */
+
+    printf("address of value: %p\n", &value);
+    printf("value of ptr1: %p\n", ptr1);
+
+    printf("address of ptr1: %p\n", &ptr1);
+    printf("value of ptr2: %p\n", ptr2);
+
+    printf("dereference ptr2 first time: %p\n", *ptr2);
+
+    printf("dereference ptr2 second time: %d\n", **ptr2);
+
+    return 0;
+}
+```
+- Ứng dụng:
+> - Kiểu json
+> - Cấu trúc List
+###   NULL POINTER
+Null Pointer là một con trỏ không trỏ đến bất kỳ đối tượng hoặc vùng nhớ cụ thể nào. Trong ngôn ngữ lập trình C, một con trỏ có thể được gán giá trị NULL để biểu diễn trạng thái null.
+Sử dụng null pointer thường hữu ích để kiểm tra xem một con trỏ đã được khởi tạo và có trỏ đến một vùng nhớ hợp lệ chưa. Tránh dereferencing (sử dụng giá trị mà con trỏ trỏ đến) một null pointer là quan trọng để tránh lỗi chương trình.
+- Ví dụ :
+```c
+#include <stdio.h>
+
+int main() {
+    int *ptr = NULL;  // Gán giá trị NULL cho con trỏ 0x0000000
+
+    if (ptr == NULL) {
+        printf("Pointer is NULL\n");
+    } else {
+        printf("Pointer is not NULL\n");
+    }
+
+    int score_game = 5;
+    if (ptr == NULL)
+    {
+        ptr = &score_game;
+        *ptr = 30;
+        ptr = NULL;
+    }
+    
+
+    return 0;
+}
+```
+</p>
+</details>
