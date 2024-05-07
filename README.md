@@ -1135,3 +1135,66 @@ int main(int argc, char const *argv[])
 
 </p>
 </details>
+
+<details><summary>LESSON 9: JSON</summary>
+<p>
+
+- JSON là viết tắt của "JavaScript Object Notation" (Ghi chú về Đối tượng JavaScript). Đây là một định dạng truyền tải dữ liệu phổ biến trong lập trình và giao tiếp giữa các máy chủ và trình duyệt web, cũng như giữa các hệ thống khác nhau.
+- JSON được thiết kế để dễ đọc và dễ viết cho con người, cũng như dễ dàng để phân tích và tạo ra cho máy tính. Nó sử dụng một cú pháp nhẹ dựa trên cặp key - value, tương tự như các đối tượng và mảng trong JavaScript. Mỗi đối tượng JSON bao gồm một tập hợp các cặp "key" và "value", trong khi mỗi mảng JSON là một tập hợp các giá trị.
+- Bắt đầu chuỗi JSON là dấu " kết thúc là dấu "
+
+### Cú pháp dựa trên cặp key-value
+
+```c
+char *json = “ 
+{ 
+  "name": "John Doe",
+  "age": 30,
+  "city": "New York",
+  "isStudent": false,
+  "grades": [85, 90, 78]
+}
+
+“
+```
+"name": là key
+
+"John Doe": là 1 value
+
+1 Object JSON mở đầu bằng "{" kết thúc bằng "}"
+
+### Các định dạng 
+```c
+typedef enum {
+            JSON_NULL,
+            JSON_BOOLEAN,
+            JSON_NUMBER,
+            JSON_STRING,
+            JSON_ARRAY,
+            JSON_OBJECT,
+    }JsonType
+```
+Các cặp key-value ngăn cách nhau bằng dấu ","
+
+### JSON Values
+- Chuỗi (String): chuỗi ký tự Unicode được bao quanh bởi dấu ngoặc kép. Ví dụ:
+  ```
+  "Hello, World!", "123", "true"
+  ```
+- Số (Number): JSON hỗ trợ cả số nguyên và số thực. Các số có thể được biểu diễn với hoặc không có dấu thập phân và/hoặc mũ. Ví dụ:
+  ```
+  123, 3.14, -42, 1.5e10
+  ```
+- Boolean: Được biểu diễn bởi từ khóa true hoặc false.
+- Mảng (Array): Một danh sách các giá trị, được bao quanh bởi dấu ngoặc vuông và các giá trị được phân tách bằng dấu phẩy. Mỗi phần tử trong mảng có thể là bất kỳ kiểu dữ liệu JSON nào. Ví dụ:
+  ```
+  [1, 2, 3, "apple", true]
+  ```
+- Đối tượng (Object): Một tập hợp các cặp key-value, được bao quanh bởi dấu ngoặc nhọn. Mỗi cặp key-value được phân tách bằng dấu phẩy. Key là một chuỗi và phải được bao quanh bởi dấu ngoặc kép, sau đó là dấu hai chấm, và sau đó là giá trị. Ví dụ:
+  ```
+  {"name": "John", "age": 30, "isStudent": true}
+  ```
+- Null: Được biểu diễn bởi từ khóa null, đại diện cho một giá trị không tồn tại hoặc không xác định.
+Lưu ý: Key bắt buộc phải là String còn value có thể là string, number, boolean,...
+</p>
+</details>
