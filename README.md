@@ -750,8 +750,10 @@ int *A = (int *)malloc(18446744073709551615);
 
 <details><summary>LESSON 5: Extern - Static - Volatile - Register</summary>
 <p>
+
 ### EXTERN
  Khái niệm Extern trong ngôn ngữ lập trình C được sử dụng để thông báo rằng một biến hoặc hàm đã được khai báo ở một nơi khác trong chương trình hoặc trong một file nguồn khác. Điều này giúp chương trình hiểu rằng biến hoặc hàm đã được định nghĩa và sẽ được sử dụng từ một vị trí khác, giúp quản lý sự liên kết giữa các phần khác nhau của chương trình hoặc giữa các file nguồn.
+ 
 ### STATIC
  Khi 1 biến cục bộ được khai báo với từ khóa static. Biến sẽ chỉ được khởi tạo 1 lần duy nhất và tồn tại suốt thời gian chạy chương trình. Giá trị của nó không bị mất đi ngay cả khi kết thúc hàm. Tuy nhiên khác với biến toàn cục có thể gọi trong tất cả mọi nơi trong chương trình, thì biến cục bộ static chỉ có thể được gọi trong nội bộ hàm khởi tạo ra nó. Mỗi lần hàm được gọi, giá trị của biến chính bằng giá trị tại lần gần nhất hàm được gọi.
 #### Static local variables
@@ -892,5 +894,160 @@ int main()
 
 Trong ngôn ngữ lập trình C, từ khóa register được sử dụng để chỉ ra ý muốn của lập trình viên rằng một biến được sử dụng thường xuyên và có thể được lưu trữ trong một thanh ghi máy tính, chứ không phải trong bộ nhớ RAM. Việc này nhằm tăng tốc độ truy cập. Tuy nhiên, lưu ý rằng việc sử dụng register chỉ là một đề xuất cho trình biên dịch và không đảm bảo rằng biến sẽ được lưu trữ trong thanh ghi. Trong thực tế, trình biên dịch có thể quyết định không tuân thủ lời đề xuất này.
 ![R](https://github.com/thuanphat1501/Advance_C/assets/130131756/04ac1b4b-fcef-4bb7-8e79-6af638da5055)
+</p>
+</details>
+
+<details><summary>LESSON 6: Goto - setjmp.h</summary>
+<p>
+
+### GOTO
+goto là một từ khóa trong ngôn ngữ lập trình C, cho phép chương trình nhảy đến một nhãn (label) đã được đặt trước đó trong cùng một hàm. Mặc dù nó cung cấp khả năng kiểm soát flow của chương trình, nhưng việc sử dụng goto thường được xem là không tốt vì nó có thể làm cho mã nguồn trở nên khó đọc và khó bảo trì.
+
+```c
+#include <stdio.h>
+
+int main() {
+    int i = 0;
+
+    // Đặt nhãn
+    start:
+        if (i >= 5) {
+            goto end;  // Chuyển control đến nhãn "end"
+        }
+
+        printf("%d ", i);
+        i++;
+
+        goto start;  // Chuyển control đến nhãn "start"
+
+    // Nhãn "end"
+    end:
+        printf("\n");
+
+    return 0;
+}
+```
+### SETJMP
+Header file có tên setjmp.h trong Thư viện C định nghĩa macro setjmp(), một hàm longjmp(), và một kiểu biến jmp_buf, để bỏ qua lời gọi hàm thông thường và trả về qui tắc, bằng cách cung cấp các phương thức để thực hiện các cú nhảy mà vẫn duy trì môi trường gọi hàm.
+
+Biến được định nghĩa trong setjmp.h
+
+Dưới đây là kiểu biến được định nghĩa trong setjmp.h:
+
+jmp_buf: Đây là một kiểu mảng được sử dụng để giữ thông tin cho macro setjmp() và hàm longjmp().
+
+Các macro được định nghĩa trong setjmp.h
+
+Chỉ có một macro được định nghĩa trong thư viện này:
+
+int setjmp(jmp_buf environment): Macro này lưu trữ môi trường (environment) hiện tại bên trong biến environment để sử dụng sau bởi hàm longjmp(). Nếu macro này trả về một cách trực tiếp từ lời gọi macro, thì nó trả về 0; nhưng nếu nó trả về từ một lời gọi hàm longjmp(), thì một giá trị khác 0 được trả về.
+
+#### Khai báo Macro setjmp() trong C
+
+```c
+int setjmp(jmp_buf environment)
+```
+- Tham số
+
+```c
+int setjmp(jmp_buf environment)
+```
+- Trả về giá trị
+  Macro này trả về nhiều hơn 1 lần. Đầu tiên, trên lời gọi trực tiếp của nó, nó luôn luôn trả về 0. Khi longjmp được gọi với thông tin được thiết lập tới environment, macro này lại trả về lần nữa; lúc này nó trả về giá trị đã được truyền tới longjmp như là tham số thứ hai.
+### Các hàm được định nghĩa trong setjmp.h
+Chỉ có một hàm được định nghĩa trong setjmp.h:
+
+Hàm void longjmp(jmp_buf environment, int value): Hàm này phục hồi môi trường (environment) đã được lưu trữ bởi lời gọi gần nhất tới macro setjmp() trong cùng lời gọi hàm của chương trình với tham số tương ứng là jmp_buf.
+#### Khai báo hàm longjmp() trong C
+
+```c
+void longjmp(jmp_buf environment, int value)
+```
+- Tham số
+  - environment − Đây là đối tượng của kiểu jmp_buf chứa thông tin để lưu trữ môi trường tại điểm gọi của setjmp.
+  - value − Đây là giá trị để biểu thức setjmp ước lượng.
+- Giá trị trả về
+  - Hàm này không trả về bất cứ giá trị nào.
+</p>
+</details>
+
+<details><summary>LESSON 7: BITMASK</summary>
+<p>
+	
+- Bitmask là một kỹ thuật sử dụng các bit để lưu trữ và thao tác với các cờ (flags) hoặc trạng thái. Có thể sử dụng bitmask để đặt, xóa và kiểm tra trạng thái của các bit cụ thể trong một từ (word).
+- Bitmask thường được sử dụng để tối ưu hóa bộ nhớ, thực hiện các phép toán logic trên một cụm bit, và quản lý các trạng thái, quyền truy cập, hoặc các thuộc tính khác của một đối tượng.
+
+### NOT bitwise
+Dùng để thực hiện phép NOT bitwise trên từng bit của một số. Kết quả là bit đảo ngược của số đó.
+
+```c
+int result = ~num ;
+```
+### AND bitwise
+Dùng để thực hiện phép AND bitwise giữa từng cặp bit của hai số. Kết quả là 1 nếu cả hai bit tương ứng đều là 1, ngược lại là 0.
+
+```c
+int result = num1 & num2;
+```
+### OR bitwise
+Dùng để thực hiện phép OR bitwise giữa từng cặp bit của hai số. Kết quả là 1 nếu có hơn một bit tương ứng là 1.
+
+```c
+int result = num1 | num2;
+```
+### XOR bitwise
+Dùng để thực hiện phép XOR bitwise giữa từng cặp bit của hai số. Kết quả là 1 nếu chỉ có một bit tương ứng là 1.
+
+```c
+int result = num1 ^ num2;
+```
+### Shift left và Shift right bitwise
+Dùng để di chuyển bit sang trái hoặc sang phải.
+- Trong trường hợp <<, các bit ở bên phải sẽ được dịch sang trái, và các bit trái cùng sẽ được đặt giá trị 0.
+- Trong trường hợp >>, các bit ở bên trái sẽ được dịch sang phải, và các bit phải cùng sẽ được đặt giá trị 0 hoặc 1 tùy thuộc vào giá trị của bit cao nhất (bit dấu).
+
+```c
+int resultLeftShift = num << shiftAmount;
+int resultRightShift = num >> shiftAmount;
+```
+### Ví dụ
+
+```c
+#include <stdio.h>
+#include <stdint.h>
+
+#define ENABLE 1
+#define DISABLE 0
+
+typedef struct {
+    uint8_t LED1 : 1;
+    uint8_t LED2 : 1;
+    uint8_t LED3 : 1;
+    uint8_t LED4 : 1;
+    uint8_t LED5 : 1;
+    uint8_t LED6 : 1;
+    uint8_t LED7 : 1;
+    uint8_t LED8 : 1;
+} LEDStatus;
+void displayAllStatusLed(LEDStatus status) {
+ 	uint8_t* statusPtr = (uint8_t*)&status;
+		for (int j = 0; j < 8; j++) {
+		printf("LED%d: %d\n", j+1, (*statusPtr >> j) & 1);
+}
+
+}
+
+
+int main() {
+    LEDStatus ledStatus = {.LED7 = ENABLE};
+
+    // Bật LED 1 và 3
+    ledStatus.LED1 = ENABLE;
+    ledStatus.LED3 = ENABLE;
+    displayAllStatusLed(ledStatus);
+	
+    return 0;
+}
+```
 </p>
 </details>
