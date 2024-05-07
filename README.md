@@ -1051,3 +1051,87 @@ int main() {
 ```
 </p>
 </details>
+
+<details><summary>LESSON 8: STRUCT - UNION</summary>
+<p>
+
+### STRUCT
+
+Trong ngôn ngữ lập trình C, struct là một cấu trúc dữ liệu cho phép lập trình viên tự định nghĩa một kiểu dữ liệu mới bằng cách nhóm các biến có các kiểu dữ liệu khác nhau lại với nhau. struct cho phép tạo ra một thực thể dữ liệu lớn hơn và có tổ chức hơn từ các thành viên (members) của nó.
+
+```c
+struct TenStruct {
+    kieuDuLieu1 thanhVien1;
+    kieuDuLieu2 thanhVien2;
+    // ...
+};
+```
+![st1](https://github.com/thuanphat1501/Advance_C/assets/130131756/3b7bc7f8-124a-49e4-a866-da04f52a2e00)
+
+#### Kích thước của Struct
+
+```c
+struct Example {
+    uint8_t a;    
+    uint16_t b;
+    uint32_t c;    
+};
+```
+
+### UNION
+Trong ngôn ngữ lập trình C, union là một cấu trúc dữ liệu giúp lập trình viên kết hợp nhiều kiểu dữ liệu khác nhau vào cùng một vùng nhớ. Mục đích chính của union là tiết kiệm bộ nhớ bằng cách chia sẻ cùng một vùng nhớ cho các thành viên của nó. Điều này có nghĩa là, trong một thời điểm, chỉ một thành viên của union có thể được sử dụng. Điều này được ứng dụng nhằm tiết kiệm bộ nhớ.
+ ```c
+union TenUnion {
+    kieuDuLieu1 thanhVien1;
+    kieuDuLieu2 thanhVien2;
+    // ...
+};
+```
+```c
+union Data {
+    uint8_t a;
+    uint16_t b;
+    uint32_t c;
+};
+```
+
+#### Kích thước của Union
+![image](https://github.com/thuanphat1501/Advance_C/assets/130131756/4e778b75-7708-4f08-bed4-8e2930e8a404)
+
+#### Ứng dụng kết hợp struct và union
+```c
+#include <stdio.h>
+#include <stdint.h>
+#include <string.h>
+
+
+typedef union {
+    struct {
+        uint8_t id[2];
+        uint8_t data[4];
+        uint8_t check_sum[2];
+    } data;
+
+    uint8_t frame[8];
+
+} Data_Frame;
+
+
+int main(int argc, char const *argv[])
+{
+    Data_Frame transmitter_data;
+    
+    strcpy(transmitter_data.data.id, "10");
+    strcpy(transmitter_data.data.data, "1234");
+    strcpy(transmitter_data.data.check_sum, "70");
+
+		Data_Frame receiver_data;
+    strcpy(receiver_data.frame, transmitter_data.frame);
+	
+    
+    return 0;
+}
+```
+
+</p>
+</details>
