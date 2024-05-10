@@ -1202,6 +1202,7 @@ Lưu ý: Key bắt buộc phải là String còn value có thể là string, num
 
 <details><summary>LESSON 10: LINKER LIST</summary>
 <p>
+	
 Linked list là một cấu trúc dữ liệu trong lập trình máy tính, được sử dụng để tổ chức và lưu trữ dữ liệu. Một linked list bao gồm một chuỗi các "nút" (nodes), mỗi nút chứa một giá trị dữ liệu và một con trỏ (pointer) đến nút tiếp theo trong chuỗi.
 
 ### Danh sách liên kết là gì?
