@@ -1198,3 +1198,49 @@ Các cặp key-value ngăn cách nhau bằng dấu ","
 Lưu ý: Key bắt buộc phải là String còn value có thể là string, number, boolean,...
 </p>
 </details>
+
+
+<details><summary>LESSON 10: LINKER LIST</summary>
+<p>
+Linked list là một cấu trúc dữ liệu trong lập trình máy tính, được sử dụng để tổ chức và lưu trữ dữ liệu. Một linked list bao gồm một chuỗi các "nút" (nodes), mỗi nút chứa một giá trị dữ liệu và một con trỏ (pointer) đến nút tiếp theo trong chuỗi.
+
+### Danh sách liên kết là gì?
+Danh sách liên kết (Linker List): là một cấu trúc dữ liệu được sử dụng để lưu trữ các phần tử tương tự như mảng nhưng cớ nhiều điểm khác biệt
+Có các loại danh sách liên kết:
+- Danh sách liên kết đơn
+- Danh sách liên kết đôi
+- Danh sách liên kết vòng
+### Tính chất
+- Danh sách liên kết có thể mở rộng và thu hẹp một cách linh hoạt
+- Phần tử cuối cùng trong DSLK trỏ vào NULL (con trỏ NULL)
+- Đây kà kiểu cấu trúc dữ liệu kiểu cấp phát động có nghĩa là còn bộ nhớ thì còn cấp phát được, cấp phát đến khi nào hết bộ nhớ thì thôi - Vùng nhớ cấp phát : Heap
+- Không lãng phí bộ nhớ nhưng cần thêm bộ nhớ để lưu phần con trỏ.
+  ![image](https://github.com/thuanphat1501/Advance_C/assets/130131756/0ccd237b-cb25-4835-b89a-73abd2810cc7)
+Để quản lí danh sách liên kết cần 1 con trỏ Head
+
+Ví dụ:
+Phần link của node 1 sẽ lưu địa chỉ node 2 là 6, tương tự với các node tiếp theo cho đến node cuối cùng link địa chỉ NULL
+```
+- Phần data lưu giá trị node
+```
+```
+- Phần link lưu địa chỉ của node kế tiếp.
+```
+#### Ưu điểm
+- Có thể mở rộng với độ phức tạp
+- Dễ mở rộng và thu hẹp kích thước
+- Có thể cấp phát số lượng lớn các node tùy vào bộ nhớ
+#### Nhược điểm
+- Khó khăn trong việc truy cập 1 phần tử ở vị trí bất kì 
+- Khó khăn trong việc cài đặt
+- Tốn thêm bộ nhớ cho phần tham chiếu bổ sung
+
+### Cấu trúc một node của LINKER LIST
+```c
+             struct node {
+             int data;
+             struct node* next; //link
+         };
+```
+</p>
+</details>
