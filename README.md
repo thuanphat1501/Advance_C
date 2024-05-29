@@ -1243,5 +1243,289 @@ Phần link của node 1 sẽ lưu địa chỉ node 2 là 6, tương tự với
              struct node* next; //link
          };
 ```
+#### Giải thích ý nghĩa của cấu trúc node
+
+- Node ở dây có phần tử dữ liệu là một số nguyên lưu ở data, ngoài ra nó còn có 1 phần con trỏ trỏ tới chính struct node. Phần này chính là địa chỉ của node tiếp theo của nó trong DSLK.
+- Như vậy mỗi node sẽ có dữ liệu của nó và có địa chỉ của node tiếp sau nó. Đối với con trỏ cuối cùng trong DSLK thì phần địa chỉ này sẽ là con trỏ NULL.
+
+##### Mỗi node trong DSLK đều được cấp phát động
+
+</p>
+</details>
+
+<details><summary>LESSON 11: STACK AND QUEUE</summary>
+<p>
+
+# 1. STACK
+### Định nghĩa:
+
+- Một ngăn xếp là một cấu trúc dữ liệu trừu tượng (Abstract Data Type – viết tắt là ADT), hầu như được sử dụng trong hầu hết mọi ngôn ngữ lập trình. Đặt tên là ngăn xếp bởi vì nó hoạt động như một ngăn xếp trong đời sống thực, ví dụ như một cỗ bài hay một chồng đĩa, …
+
+- Trong đời sống thực, ngăn xếp chỉ cho phép các hoạt động tại vị trí trên cùng của ngăn xếp. Ví dụ, chúng ta chỉ có thể đặt hoặc thêm một lá bài hay một cái đĩa vào trên cùng của ngăn xếp. Do đó, cấu trúc dữ liệu trừu tượng ngăn xếp chỉ cho phép các thao tác dữ liệu tại vị trí trên cùng. Tại bất cứ thời điểm nào, chúng ta chỉ có thể truy cập phần tử trên cùng của ngăn xếp.
+
+- Đặc điểm này làm cho ngăn xếp trở thành cấu trúc dữ liệu dạng `LIFO`. `LIFO` là viết tắt của `Last-In-First-Out`. Ở đây, phần tử được đặt vào (được chèn, được thêm vào) cuối cùng sẽ được truy cập đầu tiên. Trong thuật ngữ ngăn xếp, hoạt động chèn được gọi là hoạt động `PUSH` và hoạt động xóa được gọi là hoạt động `POP`.
+
+- Một ngăn xếp có thể được triển khai theo phương thức của Mảng (Array), Cấu trúc (Struct), Con trỏ (Pointer) và Danh sách liên kết (Linked List). Ngăn xếp có thể là ở dạng kích cỡ cố định hoặc ngăn xếp có thể thay đổi kích cỡ.
+
+### Các hoạt động cơ bản trên cấu trúc dữ liệu ngăn xếp
+
+- Push(): Đẩy 1 phần tử dữ liệu vào trong ngăn xếp
+
+- Pop(): Lấy 1 phần tử dữ liệu ra khỏi ngăn xếp
+
+- Top(): Lấy 1 phần tử trên cùng của ngăng xếp.
+
+- Is_Full(): Kiểm tra xem ngăn xếp đã đầy chưa
+
+- Is_Empty(): Kiểm tra xem ngăn xếp có trống hay không.
+
+### Định nghĩa một Stack
+
+```c
+typedef struct Stack {
+    int* items; // mảng chứa các giá trị trong ngăn xếp
+    int size;   // kích thước của mảng đó
+    int top;   // giá trị của phần tử trên cùng
+} Stack;
+```
+### Hoạt động khởi tạo một ngăn xếp
+
+```c
+void initialize( Stack *stack, int size) {
+    stack->items = (int*) malloc(sizeof(int) * size); //cấp phát động 1 mảng chứa các giá trị
+    stack->size = size; // truyền vào kích thước mong muốn
+    stack->top = -1; // gắn giá trị trên cùng bằng -1
+}
+```
+
+### Hoạt động Is_Full() trong cấu trúc dữ liệu ngăn xếp
+```c
+int Is_Full( Stack stack) {
+    return stack.top == stack.size - 1;
+}
+```
+
+### Hoạt động Is_Empty() trong cấu trúc dữ liệu ngăn xếp
+```c
+int Is_Empty( Stack stack) {
+    return stack.top == - 1;
+}
+```
+
+### Hoạt động Push() trong cấu trúc dữ liệu ngăn xếp
+```c
+void Push( Stack *stack, int value) {
+    if (!is_full(*stack)) {
+        stack->items[++stack->top] = value;
+    } else {
+        printf("Stack overflow\n");
+    }
+}
+```
+
+### Hoạt động Pop() trong cấu trúc dữ liệu ngăn xếp
+```c
+int Pop( Stack *stack) {
+    if (!is_empty(*stack)) {
+        return stack->items[stack->top--];
+    } else {
+        printf("Stack underflow\n");
+        return -1;
+    }
+}
+```
+
+### Hoạt động Top() trong cấu trúc dữ liệu ngăn xếp
+```c
+int Top( Stack stack) {
+    if (!is_empty(stack)) {
+        return stack.items[stack.top];
+    } else {
+        printf("Stack is empty\n");
+        return -1;
+    }
+}
+```
+# Ví dụ:
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct Stack {
+    int* items;
+    int size;
+    int top;
+} Stack;
+
+void initialize( Stack *stack, int size) {
+    stack->items = (int*) malloc(sizeof(int) * size);
+    stack->size = size;
+    stack->top = -1;
+}
+
+int is_empty( Stack stack) {
+    return stack.top == -1;
+}
+
+int is_full( Stack stack) {
+    return stack.top == stack.size - 1;
+}
+
+void push( Stack *stack, int value) {
+    if (!is_full(*stack)) {
+        stack->items[++stack->top] = value;
+    } else {
+        printf("Stack overflow\n");
+    }
+}
+
+int pop( Stack *stack) {
+    if (!is_empty(*stack)) {
+        return stack->items[stack->top--];
+    } else {
+        printf("Stack underflow\n");
+        return -1;
+    }
+}
+
+int top( Stack stack) {
+    if (!is_empty(stack)) {
+        return stack.items[stack.top];
+    } else {
+        printf("Stack is empty\n");
+        return -1;
+    }
+}
+
+int main() {
+    Stack stack1;
+    initialize(&stack1, 5);
+
+
+    push(&stack1, 10);
+    push(&stack1, 20);
+    push(&stack1, 30);
+    push(&stack1, 40);
+    push(&stack1, 50);
+    push(&stack1, 60);
+
+    printf("Top element: %d\n", top(stack1));
+
+    printf("Pop element: %d\n", pop(&stack1));
+    printf("Pop element: %d\n", pop(&stack1));
+
+    printf("Top element: %d\n", top(stack1));
+
+    return 0;
+}
+```
+
+# 2. QUEUE
+### Định nghĩa:
+
+- Hàng đợi (Queue) là một cấu trúc dữ liệu trừu tượng, là một cái gì đó tương tự như hàng đợi trong đời sống hàng ngày (xếp hàng).
+- Khác với ngăn xếp, hàng đợi là mở ở cả hai đầu. Một đầu luôn luôn được sử dụng để chèn dữ liệu vào (hay còn gọi là sắp vào hàng) và đầu kia được sử dụng để xóa dữ liệu (rời hàng). Cấu trúc dữ liệu hàng đợi tuân theo phương pháp First-In-First-Out, tức là dữ liệu được nhập vào đầu tiên sẽ được truy cập đầu tiên.
+- Trong đời sống thực chúng ta có rất nhiều ví dụ về hàng đợi, chẳng hạn như hàng xe ô tô trên đường một chiều (đặc biệt là khi tắc xe), trong đó xe nào vào đầu tiên sẽ thoát ra đầu tiên. Một vài ví dụ khác là xếp hàng học sinh, xếp hàng mua vé, …
+- Tương tự như cấu trúc dữ liệu ngăn xếp, thì cấu trúc dữ liệu hàng đợi cũng có thể được triển khai bởi sử dụng Mảng (Array), Danh sách liên kết (Linked List), Con trỏ (Pointer) và Cấu trúc (Struct).
+
+### Các hoạt động cơ bản trên cấu trúc dữ liệu hàng đợi:
+
+- enqueue(): Thêm 1 phần tử dữ liệu vào trong hàng đợi
+
+- dequeue(): Xóa 1 phần tử từ hàng đợi
+
+- Front(): lấy phần tử ở đầu hàng đợi, mà không xóa phần tử này.
+
+- Is_Full(): Kiểm tra xem hàng đợi đã đầy chưa
+
+- Is_Empty(): Kiểm tra xem hàng đợi có trống hay không.
+### Ví dụ:
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+
+typedef struct Queue {
+    int* items;
+    int size;
+    int front, rear;
+} Queue;
+
+void initialize(Queue *queue, int size) 
+{
+    queue->items = (int*) malloc(sizeof(int)* size);
+    queue->front = -1;
+    queue->rear = -1;
+    queue->size = size;
+}
+
+int is_empty(Queue queue) {
+    return queue.front == -1;
+}
+
+int is_full(Queue queue) {
+    return (queue.rear + 1) % queue.size == queue.front;
+}
+
+void enqueue(Queue *queue, int value) {
+    if (!is_full(*queue)) {
+        if (is_empty(*queue)) {
+            queue->front = queue->rear = 0;
+        } else {
+            queue->rear = (queue->rear + 1) % queue->size;
+        }
+        queue->items[queue->rear] = value;
+    } else {
+        printf("Queue overflow\n");
+    }
+}
+
+int dequeue(Queue *queue) {
+    if (!is_empty(*queue)) {
+        int dequeued_value = queue->items[queue->front];
+        if (queue->front == queue->rear) {
+            queue->front = queue->rear = -1;
+        } else {
+            queue->front = (queue->front + 1) % queue->size;
+        }
+        return dequeued_value;
+    } else {
+        printf("Queue underflow\n");
+        return -1;
+    }
+}
+
+int front(Queue queue) {
+    if (!is_empty(queue)) {
+        return queue.items[queue.front];
+    } else {
+        printf("Queue is empty\n");
+        return -1;
+    }
+}
+
+int main() {
+    Queue queue;
+    initialize(&queue, 3);
+
+    enqueue(&queue, 10);
+    enqueue(&queue, 20);
+    enqueue(&queue, 30);
+
+    printf("Front element: %d\n", front(queue));
+
+    printf("Dequeue element: %d\n", dequeue(&queue));
+    printf("Dequeue element: %d\n", dequeue(&queue));
+
+    printf("Front element: %d\n", front(queue));
+
+    enqueue(&queue, 40);
+    enqueue(&queue, 50);
+    printf("Dequeue element: %d\n", dequeue(&queue));
+    printf("Front element: %d\n", front(queue));
+
+    return 0;
+}
+```
 </p>
 </details>
