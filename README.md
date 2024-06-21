@@ -1860,3 +1860,365 @@ int main() {
 ```
 </p>
 </details>
+
+<details><summary>LESSON 14: OOP</summary>
+<p>
+
+# Encapsulation
+Tính đóng gói ( Encapsulation) là ẩn đi các property “ mật” khỏi người dùng. Và để làm được điều này, ta sẽ khai báo các property ở quyền truy cập private ( tức là không thể truy cập trực tiếp tới các property này). Trong trường hợp ta muốn đọc hoặc ghi các property này, thì ta cung cấp các method ở quyền truy cập public.
+```c
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class Student
+{
+    private:
+        string Name;
+        double GPA;
+        int StudentID;
+    public:
+    Student(string name);
+
+    string getName()
+    {
+        return Name;
+    }
+
+    void setGPA(double gpa)
+    {
+        GPA = gpa;
+    }
+    double getGPA()
+    {
+        return GPA;
+    }
+
+    int getID()
+    {
+        return StudentID;
+    }
+
+};
+
+Student::Student(string name)
+{
+    Name = name;
+    static int id = 1000;
+    StudentID = id;
+    ++id;
+}
+
+int main()
+{
+    Student student1("Trung");
+    Student student2("Thai");
+    Student student3("Thao");
+
+    cout << "ID: " << student1.getID() << endl;
+    cout << "Name: " << student1.getName() << endl;
+
+    cout << "ID: " << student2.getID() << endl;
+    cout << "Name: " << student2.getName() << endl;
+
+    cout << "ID: " << student3.getID() << endl;
+    cout << "Name: " << student3.getName() << endl;
+
+
+
+    return 0;
+}
+
+```
+# Inheritance
+- Tính kế thừa ( Inheritance) là khả năng sử dụng lại các property và method của một class trong một class khác. Ta chia chúng làm 2 loại là class cha và class con. Để kế thừa từ class khác, ta dùng ký tự `: `.
+- Tất cả những property và method có quyền truy cập là public và protected ở class cha sẽ được class con kế thừa.
+- Có 3 kiểu kế thừa là public, private và protected. Những property và method được kế thừa từ class cha sẽ nằm ở quyền truy cập của class con tương ứng với kiểu kế thừa.
+```c
+#include <iostream>
+#include <string>
+
+
+using namespace std;
+
+class Person
+{
+protected:
+  string Name;
+  int Age;
+  string Home_Address;
+
+public:
+  string getName()
+  {
+    return Name;
+  }
+  void setName(string name)
+  {
+    Name = name;
+  }
+
+  int getAge()
+  {
+    return Age;
+  }
+  void setAge(int age)
+  {
+    Age = age;
+  }
+
+  string getAddress()
+  {
+    return Home_Address;
+  }
+  void setAddress(string address)
+  {
+    Home_Address = address;
+  }
+
+  void displayInfo()
+  {
+    cout << "Name: " << Name << endl;
+    cout << "Age: " << Age << endl;
+    cout << "Address: " << Home_Address << endl;
+  }
+  
+};
+
+
+class Student : public Person
+{
+private:
+  string School_Name;
+  double GPA;
+  int StudentID;
+
+public:
+  Student()
+  {
+    static int id = 1000;
+    StudentID = id;
+    id++;
+  }
+
+  string getSchoolName()
+  {
+    return School_Name;
+  }
+  void setSchoolName(string school_name)
+  {
+    School_Name = school_name;
+  }
+
+  double getGPA()
+  {
+    return GPA;
+  }
+  void setGPA(double gpa)
+  {
+    GPA = gpa;
+  }
+
+  int getID()
+  {
+    return StudentID;
+  }
+
+  void displayInfo() // overriding
+  {
+    cout << "Name: " << Name << endl;
+    cout << "Age: " << Age << endl;
+    cout << "Address: " << Home_Address << endl;
+    cout << "School name: " << School_Name << endl;
+    cout << "GPA: " << GPA << endl;
+  }
+
+};
+
+int main()
+{
+  Person person1;
+  person1.setName("Trung");
+  person1.setAge(20);
+  person1.setAddress("HCM");
+  person1.displayInfo();
+
+  cout << "-----------------------" << endl;
+  
+  Student student1;
+
+  student1.setName("Trungg");
+  student1.setAge(24);
+  student1.setAddress("HCMM");
+  student1.setGPA(8.1);
+  student1.setSchoolName("DinhTienHoang");
+  student1.displayInfo();
+
+  return 0;
+}
+```
+# Polymorphism
+- Tính đa hình ( Polymorphism) có nghĩa là "nhiều dạng" và nó xảy ra khi chúng ta có nhiều class có liên quan với nhau thông qua tính kế thừa.
+- Tính đa hình là cách dùng những method được kế thừa để thực hiện các tác vụ khác nhau. Điều này giúp chúng ta thể hiện 1 hành động theo nhiều cách khác nhau. ( Function overriding)
+- Function overloading cung cấp nhiều định nghĩa cho 1 function bằng cách thay đổi số lượng input parameter, kiểu dữ liệu của input parameter.
+```c
+#include <iostream>
+#include <string>
+
+
+using namespace std;
+
+class Person
+{
+protected:
+  string Name;
+  int Age;
+  string Home_Address;
+
+public:
+  virtual string test()
+  {
+    return "Hello person";
+  }
+
+  void displayInfo()
+  {
+    cout << test() << endl;
+  }
+  
+};
+
+
+class Student : public Person
+{
+private:
+  string School_Name;
+  double GPA;
+  int StudentID;
+
+public:
+  string test()
+  {
+    return "Hello student";
+  }
+
+};
+
+int main()
+{
+  Person person1;
+  person1.displayInfo();
+  
+
+  cout << "-----------------------" << endl;
+  
+  Student student1;
+  student1.displayInfo();
+
+  
+
+  return 0;
+}
+```
+```c
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+
+int sum(int a, int b)
+{
+    return a+b;
+}
+int sum(int a, int b, int c)
+{
+    return a+b+c;
+}
+double sum(double a, double b)
+{
+    return a+b;
+}
+
+```
+# Abstraction
+Tính trừu tượng đề cập đến việc ẩn đi các chi tiết cụ thể của một đối tượng và chỉ hiển thị những gì cần thiết để sử dụng đối tượng đó.
+```c
+#include <iostream>
+#include <string>
+#include <cmath>
+
+using namespace std;
+
+class GiaiPhuongTrinh
+{
+    private:
+        double a;
+        double b;
+        double c;
+        double x1;
+        double x2;
+        double delta;
+        void tinhNghiem()
+        {
+            delta = b*b - 4*a*c;
+            if (delta < 0)
+            {
+                delta = -1;
+            }
+            else if (delta == 0)
+            {
+                x1 = x2 = -b/ (2*a);
+            }
+            else if (delta > 0)
+            {
+                x1 = (-b + sqrt(delta))/(2*a);
+                x2 = (-b - sqrt(delta))/(2*a);
+            }
+        }
+    public:
+
+        void enterNumber(double num_a, double num_b, double num_c);
+        void printResult();
+
+};
+
+void GiaiPhuongTrinh::enterNumber(double num_a, double num_b, double num_c)
+{
+    a = num_a;
+    b = num_b;
+    c = num_c;
+}
+
+void GiaiPhuongTrinh::printResult()
+{
+    tinhNghiem();
+    if (delta == -1)
+    {
+        cout << "PT vo nghiem" << endl;
+    }
+    else if (delta == 0)
+    {
+        cout << "PT co nghiem chung: " << x1 << endl;
+    }
+    else if (delta > 0)
+    {
+        cout << "PT co 2 nghiem: \n";
+        cout << "x1: " << x1 << endl;
+        cout << "x2: " << x2 << endl;
+    }
+}
+
+int main()
+{
+  GiaiPhuongTrinh phuongtrinh1;
+  phuongtrinh1.enterNumber(1,5,4);
+  phuongtrinh1.printResult();
+
+  return 0;
+}
+
+```
+</p>
+</details>
