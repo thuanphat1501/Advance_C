@@ -1529,3 +1529,334 @@ int main() {
 ```
 </p>
 </details>
+
+<details><summary>LESSON 12: BINARY SEARCH</summary>
+<p>
+
+# BINARY SEARCH
+- Trong khoa học máy tính, tìm kiếm nhị phân (tiếng Anh: binary search), còn gọi là tìm kiếm nửa khoảng, tìm kiếm logarit, hay chặt nhị phân, là một thuật toán tìm kiếm xác định vị trí của một giá trị cần tìm trong một mảng đã được sắp xếp.
+- Thuật toán này hoạt động bằng cách chia không gian tìm kiếm thành hai phần bằng cách so sánh giá trị cần tìm với giá trị ở giữa mảng. Dựa vào kết quả so sánh, thuật toán tiếp tục tìm kiếm trong nửa phía bên trái hoặc bên phải của mảng.
+
+# FILE OPERATIONS
+- Ngôn ngữ lập trình C cung cấp một số thư viện và hàm tiêu biểu để thực hiện các thao tác với file. 
+- File CSV (Comma-Separated Values) là một loại file văn bản được sử dụng để lưu trữ và truyền tải dữ liệu có cấu trúc dưới dạng bảng, trong đó các dữ liệu của các cột được phân tách bằng dấu phẩy (,) hoặc một ký tự ngăn cách khác.
+
+```c
+FILE *file = fopen(const char *file_name, const char *access_mode);
+
+```
+### Các chế độ để sử dụng:
+![image](https://github.com/thuanphat1501/Advance_C/assets/130131756/305e36be-878d-448f-9b5c-77eb8ac00f4f)
+![image](https://github.com/thuanphat1501/Advance_C/assets/130131756/18f16c99-7418-4c42-ba07-e947bd0172c8)
+![image](https://github.com/thuanphat1501/Advance_C/assets/130131756/b2f1b6ac-5ac3-4a20-9af7-1c4c76b7f8c4)
+### Các hàm sử dụng:
+![image](https://github.com/thuanphat1501/Advance_C/assets/130131756/b0ab24e2-4a50-4faf-8381-454e56bb2427)
+![image](https://github.com/thuanphat1501/Advance_C/assets/130131756/02d8586b-56d1-4e1f-b49c-4a658a7e879a)
+
+</p>
+</details>
+
+<details><summary>LESSON 13: CLASS</summary>
+<p>
+
+# CLASS
+	
+Trong C++, từ khóa "class" được sử dụng để định nghĩa một lớp, là một cấu trúc dữ liệu tự định nghĩa có thể chứa dữ liệu và các hàm thành viên liên quan. 
+
+```c
+class ClassName {
+private:
+    // Các thành phần riêng tư (private) chỉ có thể truy cập bên trong lớp
+    // Dữ liệu thành viên, hàm thành viên, ...
+
+protected:
+    // Các thành phần bảo vệ (protected) tương tự như private, nhưng có thể truy cập từ lớp kế thừa
+
+public:
+    // Các thành phần công khai (public) được truy cập từ bên ngoài lớp
+    // Dữ liệu thành viên, hàm thành viên, ...
+    // Hàm thành viên và các phương thức khác có thể được định nghĩa tại đây
+    // ...
+
+};
+
+```
+### Constructor
+Constructor trong C++ là một method sẽ được tự động gọi khi khởi tạo object. Constructor sẽ có tên trùng với tên của class.
+
+```c
+class HinhChuNhat {
+
+public:
+    double chieuDai;
+    double chieuRong;
+
+    HinhChuNhat(){
+        chieuDai = 10;
+        chieuRong = 9;
+    }
+
+    // Hàm tính diện tích
+    double tinhDienTich() {
+        return chieuDai * chieuRong;
+    }
+   
+};
+```
+```c
+int main()
+{
+    HinhChuNhat hinh1;
+
+
+    std::cout << "Chieu dai: " << hinh1.chieuDai << '\n';
+
+
+    return 0;
+}
+```
+
+### Destructor
+Destructor trong C++ là một method sẽ được tự động gọi khi object được giải phóng. Destructor sẽ có tên trùng với tên của class và thêm ký tự `~`ở phía trước tên.
+
+```c
+class HinhChuNhat {
+
+public:
+    double chieuDai;
+    double chieuRong;
+
+    HinhChuNhat(){
+        chieuDai = 10;
+        chieuRong = 9;
+    }
+    ~HinhChuNhat(){
+        std::cout << "Destructor " << '\n';
+    }
+
+
+    // Hàm tính diện tích
+    double tinhDienTich() {
+        return chieuDai * chieuRong;
+    }
+   
+};
+```
+
+### Static keyword
+Khi một property trong class được khai báo với từ khóa static, thì tất cả các object sẽ dùng chung địa chỉ của property này.
+```c
+class HinhChuNhat {
+
+public:
+    double chieuDai;
+    double chieuRong;
+    
+    static int var;
+};
+
+int HinhChuNhat::var;
+
+int main()
+{
+    HinhChuNhat hinh1;
+    HinhChuNhat hinh2;
+    HinhChuNhat hinh3;
+
+    cout << "address of chieu dai: " << &hinh1.chieuDai << '\n'; 
+    cout << "address of chieu dai: " << &hinh2.chieuDai << '\n'; 
+    cout << "address of chieu dai: " << &hinh3.chieuDai << '\n'; 
+
+    cout << "address of var: " << &hinh1.var << '\n'; 
+    cout << "address of var: " << &hinh2.var << '\n'; 
+    cout << "address of var: " << &hinh3.var << '\n'; 
+
+
+    return 0;
+}
+```
+#### Khi một method trong class được khai báo với từ khóa static:
+- Method này độc lập với bất kỳ đối tượng nào của lớp.
+- Method này có thể được gọi ngay cả khi không có đối tượng nào của class tồn tại.
+- Method này có thể được truy cập bằng cách sử dụng tên class thông qua toán tử `::` .
+- Method này có thể truy cập các static property và các static method bên trong hoặc bên ngoài class.
+- Method có phạm vi bên trong class và không thể truy cập con trỏ đối tượng hiện tại.
+```c
+#include <iostream>
+
+using namespace std;
+
+class HinhChuNhat
+{
+public:
+    double chieuDai;
+    double chieuRong;
+    static int count;
+
+    HinhChuNhat(int dai = 5, int rong = 4);
+    ~HinhChuNhat();
+
+    double tinhDienTich();
+    static void display();
+};
+
+HinhChuNhat::HinhChuNhat(int dai, int rong)
+{
+    chieuDai = dai;
+    chieuRong = rong;
+    count++;
+}
+
+HinhChuNhat::~HinhChuNhat()
+{
+    cout << "Destructor" << endl;
+}
+
+void HinhChuNhat::display()
+{
+    cout << "Number of object: " << count << endl;
+}
+
+int HinhChuNhat::count = 0;
+
+
+
+int main()
+{ 
+    HinhChuNhat::display();
+
+    return 0;
+}
+```
+### Binary search
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+
+
+typedef struct Node {
+    int data;
+    struct Node *next;
+} Node;
+
+//them node va sap xep tu be den lon
+void add_node(Node **head, int value) {
+    Node *new_node = (Node *)malloc(sizeof(Node));
+    new_node->data = value;
+    new_node->next = NULL;
+
+    if (*head == NULL || (*head)->data >= value) {
+        new_node->next = *head;
+        *head = new_node;
+        return;
+    }
+
+    Node *current = *head; // current = 0xb3
+    while (current->next != NULL && current->next->data < value) {
+        current = current->next; // current = 0xa2
+    }
+
+    new_node->next = current->next;
+    current->next = new_node;
+}
+
+typedef struct CenterPoint {
+    int value;
+    struct CenterPoint *left;
+    struct CenterPoint *right;
+} CenterPoint;
+
+//tim diem giua phia ben trai va ben phai su dung de quy
+CenterPoint *buildTree(Node *head, int start, int end) {
+    if (head == NULL || start > end) {
+        return NULL;
+    }
+
+    int mid = (start + end) / 2;
+    Node *node = head;
+    for (int i = start; i < mid; i++) {
+        if (node->next == NULL) {
+            break;
+        }
+        node = node->next;
+    }
+
+    CenterPoint *root = (CenterPoint *) malloc(sizeof(CenterPoint));
+    root->value = node->data;
+    root->left = buildTree(head, start, mid - 1);
+    root->right = buildTree(node->next, mid + 1, end);
+
+    return root;
+}
+
+//tim diem giua
+CenterPoint *centerPoint(Node *head) {
+    int length = 0;
+    Node *node = head;
+    while (node != NULL) {
+        node = node->next;
+        length++;
+    }
+
+    return buildTree(head, 0, length - 1);
+}
+
+//ham tim kiem nhi phan
+CenterPoint *binarySearch(CenterPoint *root, int value) {
+    static int loop = 0;
+    loop++;
+    printf("so lan lap: %d\n", loop);
+    if (root == NULL) {
+        return NULL;
+    }
+
+    if (root->value == value) {
+        return root;
+    }
+
+    if (value < root->value) {
+        return binarySearch(root->left, value);
+    } else {
+        return binarySearch(root->right, value);
+    }
+}
+
+void print_list(Node *head) {
+    while (head != NULL) {
+        printf("%d ", head->data);
+        head = head->next;
+    }
+    printf("\n");
+}
+
+int main() {
+    Node *head = NULL;
+
+//tao ngau nhien 10000 node
+    srand(time(NULL));
+    for (int i = 0; i < 10000; i++) {
+        int value = rand() % 10000 + 1;
+        add_node(&head, value);
+    }
+
+    //add_node(&head, 5639);
+
+    print_list(head);
+
+    CenterPoint *ptr = centerPoint(head);
+
+    int value = 5639;
+    CenterPoint *result = binarySearch(ptr, value);
+    if (result != NULL) {
+        printf("Tim thay %d\n", result->value);
+    } else {
+        printf("Khong tim thay\n");
+    }
+
+    return 0;
+}
+```
+</p>
+</details>
