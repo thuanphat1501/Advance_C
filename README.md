@@ -2222,3 +2222,252 @@ int main()
 ```
 </p>
 </details>
+
+<details><summary>LESSON 15: Standard template library</summary>
+<p>
+
+Standard Template Library ( STL) là một thư viện trong ngôn ngữ lập trình C++ cung cấp một tập hợp các template classes và functions để thực hiện nhiều loại cấu trúc dữ liệu và các thuật toán phổ biến. STL đã trở thành một phần quan trọng của ngôn ngữ C++ và làm cho việc lập trình trở nên mạnh mẽ, linh hoạt và hiệu quả.
+- Một số thành phần chính của STL:
+> - Container
+> - Iterator
+> - Algorithms
+> - Functor
+
+## Container
+Một container là một cấu trúc dữ liệu chứa nhiều phần tử theo một cách cụ thể. STL (Standard Template Library) cung cấp một số container tiêu biểu giúp lưu trữ và quản lý dữ liệu. 
+Ví dụ:
+- Vector
+- List
+- Map
+- Array
+
+### Vector
+- Vector là một trong những container quan trọng nhất trong STL của C++. Nó cung cấp một mảng động với khả năng thay đổi kích thước một cách linh hoạt. 
+- Một số đặc điểm chính của vector:
+	 - Vector là một mảng động, tức là có khả năng thay đổi kích thước một cách linh hoạt.
+ 	 - Truy cập ngẫu nhiên: Việc truy cập các phần tử của vector có thể được thực hiện bằng cách sử dụng chỉ số.
+	 - Hiệu suất chèn và xóa: Chèn và xóa phần tử ở cuối vector có hiệu suất tốt. Tuy nhiên, chèn và xóa ở vị trí bất kỳ có thể đòi hỏi di chuyển một số phần tử.
+- Một số method của vector:
+	 - at(): Truy cập vào phần tử của vector
+	 - size(): Trả về kích thước của vector
+	 - resize(): Thay đổi kích thước của vector
+	 - begin(): Địa chỉ của phần tử đầu tiên của vector
+	 - end(): Địa chỉ của phần tử cuối cùng của vector
+	 - push_back(): Thêm phần tử vào vị trí cuối của vector
+Ví dụ:
+```c
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int main()
+{
+  
+    vector <int> arr1 = {2,5,7,4,9};
+
+    arr1.at(0) = 3;
+    arr1.resize(7);
+
+    for (int i = 0; i < arr1.size(); i++)
+    {
+        cout << "Value: " << arr1.at(i) << endl;
+    }
+    arr1.push_back(10);
+    cout << "-----------" << endl;
+    for (int i = 0; i < arr1.size(); i++)
+    {
+        cout << "Value: " << arr1.at(i) << endl;
+    }
+    return 0;
+}
+
+```
+### List
+- List là một container trong STL của C++, triển khai dưới dạng danh sách liên kết hai chiều. 
+- Một số đặc điểm chính của list:
+	 - Truy cập tuần tự: Truy cập các phần tử của list chỉ có thể thực hiện tuần tự, không hỗ trợ truy cập ngẫu nhiên.
+	 - Hiệu suất chèn và xóa: Chèn và xóa ở bất kỳ vị trí nào trong danh sách có hiệu suất tốt hơn so với vector. Điều này đặc biệt đúng khi thêm/xóa ở giữa danh sách.
+- Một số method của list:
+	 - push_back():
+	 - pop_back():
+	 - insert(): Chèn một node vào list
+	 - erase(): Xóa một node của list
+	 - size(): Trả về kích thước của list
+Ví dụ:
+```c
+#include <iostream>
+#include <list>
+
+using namespace std;
+
+int main()
+{
+  
+    list <int> arr1 = {2,5,7,4,9};
+
+    list <int> :: iterator it;
+
+    int i = 0;
+    for (it = arr1.begin(); it != arr1.end(); ++it)
+    {
+        if (i == 2)
+        {
+            arr1.insert(it,10);
+            break;
+        }
+        i++;
+    }
+
+    i = 0;
+    for (it = arr1.begin(); it != arr1.end(); ++it)
+    {
+        if (i == 4)
+        {
+            arr1.erase(it);
+            break;
+        }
+        i++;
+    }
+
+    for (auto const var : arr1)
+    {
+        cout << "Value: " << var << endl;
+    }
+    return 0;
+}
+
+```
+#### Lưu ý:
+- Sử dụng vector khi:
+	- Cần truy cập ngẫu nhiên đến các phần tử.
+	- Thực hiện nhiều thao tác chèn/xóa ở cuối danh sách.
+	- Dung lượng có thể biết trước hoặc thay đổi ít.
+- Sử dụng list khi:
+	- Thực hiện nhiều thao tác chèn/xóa ở bất kỳ vị trí nào trong danh sách.
+	- Cần thực hiện nhiều thao tác chèn/xóa mà không làm ảnh hưởng đến các iterators hiện có.
+	- Dung lượng không quan trọng hoặc thay đổi thường xuyên.
+### Map
+- Map là một container trong STL của C++, cung cấp một cấu trúc dữ liệu ánh xạ key-value.
+- Map lưu trữ các phần tử dưới dạng cặp key-value, trong đó mỗi key phải là duy nhất trong map.
+- Ta có thể thêm phần tử mới vào map bằng cách sử dụng operator [] hoặc hàm insert(). Để xóa phần tử, bạn có thể sử dụng hàm erase().
+- Ta có thể sử dụng iterator để duyệt qua các phần tử của map.
+
+Ví dụ:
+```c
+#include <map>
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+int main() {
+    map<string, int> myMap;
+
+    map<string,int> ::iterator it;
+
+    // Thêm phần tử vào map
+    myMap["one"] = 1;
+    myMap["two"] = 2;
+    myMap["three"] = 3;
+    myMap.insert(make_pair("four", 4));
+    myMap.erase("one");
+
+    for (auto const var : myMap)
+    {
+        cout << "Key: " << var.first << " , " << "Value: " << var.second << endl;
+    }
+    
+    for (it = myMap.begin(); it != myMap.end(); ++it)
+    {
+        cout << "Key: " << (*it).first << " , " << "Value: " << (*it).second << endl;
+    }
+    return 0;
+}
+
+```
+### Array
+- Array là một container có kích thước cố định và có sẵn trong thư viện STL (Standard Template Library).
+- Array có kích thước cố định được xác định tại thời điểm biên dịch và không thể thay đổi sau khi được khai báo.
+- Array hỗ trợ truy cập ngẫu nhiên vào các phần tử thông qua toán tử [].
+
+Ví dụ:
+```c
+#include <iostream>
+#include <array>
+
+using namespace std;
+
+int main()
+{
+  
+    array <int, 5> arr = {2,3,1,7,6};
+
+    if (arr.empty())
+    {
+        cout << "Array is empty" << endl;
+    }
+    else
+    {
+        cout << "Array it not empty" << endl;
+    }
+    
+    for (int i = 0; i < arr.size(); i++)
+    {
+        cout << "Value: " << arr.at(i) << endl;
+    }
+    
+    return 0;
+}
+
+```
+### Iterator
+- Iterator cung cấp một cách chung để duyệt qua các phần tử của một container mà không cần biết chi tiết về cách container được triển khai.
+- Iterator là một đối tượng cho phép truy cập tuần tự qua các phần tử của một container.
+- Nó giống như con trỏ, cho phép di chuyển qua các phần tử trong container.
+### Algorithm
+Thư viện STL (Standard Template Library) cung cấp một số thuật toán tiêu biểu thông qua algorithm. Các thuật toán này hoạt động trên các phạm vi hoặc các loại dữ liệu khác nhau, giúp thực hiện các nhiệm vụ như sắp xếp, tìm kiếm, chuyển đổi dữ liệu, và nhiều thao tác khác. 
+
+Ví dụ:
+```c
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+
+int main()
+{
+
+    vector <int> arr = {3,5,7,4,1};
+
+    for (auto const var : arr)
+    {
+        cout << "Vector: " << var << endl;
+    }
+
+    sort(arr.begin(), arr.end());
+    
+    cout << "vector after sort ascending: " << endl;
+
+    for (auto const var : arr)
+    {
+        cout << "Vector: " << var << endl;
+    }
+
+    sort(arr.begin(), arr.end(), greater<int>());
+    
+    cout << "vector after sort descending: " << endl;
+
+    for (auto const var : arr)
+    {
+        cout << "Vector: " << var << endl;
+    }
+
+    return 0;
+}
+
+```
+</p>
+</details>
